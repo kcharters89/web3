@@ -1,0 +1,19 @@
+#css 
+
+.column{ width:100% }
+
+@media screen and (min-width: 600px) {
+  /* For tablets: */
+  .column { width: 50% } 
+  
+}
+
+@media screen and (min-width: 1024px) {
+  /* For desktop: */
+  .column { width: 33.333% }  
+  .image1 { width: 33.333%} 
+}
+
+.container{
+    display: flex;
+}
