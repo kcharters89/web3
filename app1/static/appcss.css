@@ -17,3 +17,6 @@
 .container{
     display: flex;
 }
+.vert-list{
+  display:left;
+} 
