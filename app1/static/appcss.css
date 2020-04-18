@@ -14,9 +14,14 @@
   .image1 { width: 33.333%} 
 }
 
-.container{
+.container-fluid{
     display: flex;
+    
 }
+
 .vert-list{
   display:left;
 } 
+.row{
+  margin-left: 10px;
+}
