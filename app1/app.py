@@ -66,7 +66,7 @@ def utility():
 
 #api's (seperate file?)
 @app.route('/countries', methods=['GET'])
-
+#what is going on?
 @app.route('/countries/<countries_id>', methods=['GET','POST','DELETE'])
 def getCountries(countries_id=None):
     if request.method == 'GET':
@@ -76,7 +76,7 @@ def getCountries(countries_id=None):
              
         else:
             countries = Country.objects.get(name=name)
-            
+            #error name is not defined before now
         return Country.objects.to_json()
         # render_template('countries.html', countries=countries)
          
