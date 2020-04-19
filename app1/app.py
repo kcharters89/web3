@@ -22,17 +22,16 @@ class Country(Document):
 @app.route('/home')
 def index():
     #choose csv that doeesnt have missing data or figure how turn blanks into 0's
+    my_dict = {}
     for file in os.listdir(app.config['FILES_FOLDER']):
         filename = os.fsdecode(file)
         path = os.path.join(app.config['FILES_FOLDER'],filename)
         f = open(path)
         r = csv.reader(f)
-        #d = list(r)
-        for row in r:
-           for i, x in enumerate(row):
-                if len(x)< 1:
-                    x = row[i] = 0
-    print (','.join(str(x) for x in row))
+        d = list(r)
+        for row in d:
+            my_dict[row[0]] = [cell for cell in row[1:] if cell]
+        print(my_dict)    
     #works for only zimbabwae by turning blank into 0 need it for all countries 
     #ask about this maybe
     return render_template('index.html')
