@@ -65,19 +65,26 @@ def utility():
     #json.dumps(names) #python one 
 
 #api's (seperate file?)
-@app.route('/countries', methods=['GET'])
-#what is going on?
-@app.route('/countries/<countries_id>', methods=['GET','POST','DELETE'])
+@app.route('/countries<countries_id>', methods=['GET'])
+def getCountriesById(countries_id=None):
+    countries = None
+    if countries_id is None:
+        countries = Country.objects
+    else:
+        countries = Country.objects.get(name=countries_id)
+    return countries.to_json()
+
+@app.route('/countries', methods=['GET','POST','DELETE'])
 def getCountries(countries_id=None):
     if request.method == 'GET':
-       name=countries 
+        name=request.form.get('name') 
         if countries_id is None:
             countries = Country.objects
              
         else:
             countries = Country.objects.get(name=name)
-            #error name is not defined before now
-        return Country.objects.to_json()
+            
+        
         # render_template('countries.html', countries=countries)
          
     elif request.method == 'POST':
@@ -87,8 +94,8 @@ def getCountries(countries_id=None):
         
         newName = Country(name=name).save()
         
-        country = Country.objects
-        return Country.objects.to_json()
+        countries = Country.objects
+        
         #render_template('countries.html',countries=countries, name=name)
 
     elif request.method == 'DELETE':
@@ -96,15 +103,15 @@ def getCountries(countries_id=None):
         name = request.form.get('name') 
         delname = Country.objects(name=name).all()
         delname.delete()
-        country = Country.objects
-        return Country.objects.to_json()
+        countries = Country.objects
+        
     else:
     # POST Error 405 Method Not Allowed
         return render_template('countries.html')
-
+    return render_template('countries.html',countries=countries, name=name)
 if __name__ == "__main__":
-    #app.run(debug=True, port=8080)
-    app.run(host='0.0.0.0', port=80)
+    app.run(debug=True, port=8080)
+    #app.run(host='0.0.0.0', port=80)
     
 
 

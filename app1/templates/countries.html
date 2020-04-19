@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+
+{% block container %}
+<div class="row">
+    <div class="col-6">
+<h1> countries</h1>
+{% for item in countries %}
+
+<li>{{item.name}}</li>
+{% endfor %}
+</div>
+
+
+ <div class="col-4">
+<h1>Add Country </h1>
+ <div class="form-group">
+  <form action = "{{ url_for('getCountries') }}" method="POST">
+    
+    <div class="input text">
+    Name: <input type="text" name="name" required>
+    <br>
+    {{name.label}}
+    </div>
+
+    <div class="input submit">
+   <input type="submit" value="Submit" id="button">
+   </div>
+</form>
+ </div>
+<h1>Delete Country </h1>
+<p>some how do this with ajax </p>
+</div>
+
+   {% endblock %}   
