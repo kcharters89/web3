@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block container %}
@@ -6,30 +5,39 @@
     <div class="col-6">
 <h1> countries</h1>
 {% for item in countries %}
-
 <li>{{item.name}}</li>
 {% endfor %}
 </div>
 
 
  <div class="col-4">
-<h1>Add Country </h1>
- <div class="form-group">
-  <form action = "{{ url_for('getCountries') }}" method="POST">
-    
+<h1>Add /Delete Country </h1>
+ 
     <div class="input text">
-    Name: <input type="text" name="name" required>
+    Name: <input type="text" name="name" id="countryName" required>
     <br>
-    {{name.label}}
+    {{countries.label}}
     </div>
+<!-- just have a button no form  -->
+  <button id="sub_button">Submit</button>
+  <button id="del_button">Delete</button>
+ <div>
+  <h1>Delete Country </h1>
+ <!-- <form action = "{{ url_for('getCountries') }}" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+  <div class="input text">
+  Name: <input type="text" name="name" required>
+  <br>
+  {{countries.label}}
+  </div>
 
-    <div class="input submit">
-   <input type="submit" value="Submit" id="button">
-   </div>
-</form>
+  <div class="input submit">
+ <input type="submit" value="Delete" id="del_button">
  </div>
-<h1>Delete Country </h1>
-<p>some how do this with ajax </p>
+</form> -->
 </div>
+</div>
+<svg></svg>
+ 
 
-   {% endblock %}   
+{% endblock %}   
