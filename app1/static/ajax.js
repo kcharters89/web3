@@ -2,17 +2,18 @@ $(document).ready(function() {
   fetch('/countries')
   .then(response => response.json())
   .then(data => {
-   
+    var width = 400,
+        height = 100;
   //having issue with scale and domain range
-  d3.max(data, function(d) { 
-    console.log(d.data[0])   //Returns undefined
-    return d[0];  //References first value in each sub-array
-});
+//   d3.max(data, function(d) { 
+//     console.log(d.data[0])   //Returns undefined
+//     return d[0];  //References first value in each sub-array
+// });
 
-  var myScale = d3.scaleLinear()
-  .domain([0, 10])
-  .range([0, 600]);
- console.log (myScale(5))//outputs 300
+var scale = d3.scaleLinear()
+.domain([d3.min(data), d3.max(data)])
+.range([0, width - 100]);
+
 
     var g = d3.select("svg").selectAll("g").data(data);
                    
@@ -33,9 +34,10 @@ $(document).ready(function() {
     var circle = en.append("circle")
     .attr("cx", function(d,i){return 30 + i*60})
     .attr("cy", 250).attr("r", 19)
-    .attr("fill", function(d,i){return d3.schemeCategory10[i % 10] })
+    .attr("fill", function(d,i){return d3.schemeCategory10[i % 10] });
     en.append("text").text(function(d){ return d.name });
-  
+   
+
   });
 
 $('#sub_button').click(function(){
