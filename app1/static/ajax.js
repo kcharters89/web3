@@ -1,47 +1,50 @@
+
 $(document).ready(function() {
-  fetch('/countries')
-  .then(response => response.json())
-  .then(data => {
-    var width = 400,
-        height = 100;
-  //having issue with scale and domain range
-//   d3.max(data, function(d) { 
-//     console.log(d.data[0])   //Returns undefined
-//     return d[0];  //References first value in each sub-array
-// });
-
-var scale = d3.scaleLinear()
-.domain([d3.min(data), d3.max(data)])
-.range([0, width - 100]);
-
-
+   fetch('/countries')
+   .then(response => response.json())
+   .then(data => {
+  
+   year = 1800
+   
+   
+ //figure out max and min, call the funstion in translate / transform  x y 
     var g = d3.select("svg").selectAll("g").data(data);
                    
-    var en = g.enter().append("g")
+    var enter = g.enter().append("g")
     .attr("transform",function(d){ 
-      //replace math with d. something with your data console log the d no need to loop
+      incyear = d3.keys(d.data.income_per_person_gdppercapita_ppp_inflation_adjusted)
+      var maxincyear = d3.max(d3.values(incyear).map(function(d){return +d}))
+      console.log("maxincyear",maxincyear)
+     year = d3.keys(d.data.child_mortality_0_5_year_olds_dying_per_1000_born)
+     var maxyear = d3.max(d3.values(year).map(function(d){return +d}))
+      // convert to number
+      
+     console.log("max child year",maxyear)
+     var minyear = d3.min(d3.values(year).map(function(d){return +d}))
+     console.log("max child year",minyear)
+  
     //console.log(d.data.child_mortality_0_5_year_olds_dying_per_1000_born)
-    //translate expects a number but i dont know what number
-  // x and y coords
-  
-  //d.data.child_mortality_0_5_year_olds_dying_per_1000_born[] income_per_person_gdppercapita_ppp_inflation_adjusted[]
-  //domain and range look into this , mapping function
-  
-    return "translate("+ (Math.random() * 100) + 40 + "," + (Math.random() * 100) + 40 +")" 
-    
+   // console.log(d3.keys(d.data.child_mortality_0_5_year_olds_dying_per_1000_born))
+    //console.log(d3.values(d.data.child_mortality_0_5_year_olds_dying_per_1000_born))
+    if (d && d.data && d.data.child_mortality_0_5_year_olds_dying_per_1000_born && d.data.child_mortality_0_5_year_olds_dying_per_1000_born[minyear] )
+    return "translate("+ d.data.child_mortality_0_5_year_olds_dying_per_1000_born[minyear] + "," + d.data.child_mortality_0_5_year_olds_dying_per_1000_born[maxyear] +")" 
+    else if(d && d.data && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[minyear])
+    return "translate("+ d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[minyear] + "," + d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[maxincyear] +")" 
+   //domain and range look into this , mapping function
+   
+  // for later d3 code plot circles funtion draw
   });
 // made colourful circles need to join with text?
-    var circle = en.append("circle")
-    .attr("cx", function(d,i){return 30 + i*60})
-    .attr("cy", 250).attr("r", 19)
+    var circle = enter.append("circle")
+    .attr("r",19)
     .attr("fill", function(d,i){return d3.schemeCategory10[i % 10] });
-    en.append("text").text(function(d){ return d.name });
+    enter.append("text").text(function(d){ return d.name });
    
-
-  });
+    });
+  
 
 $('#sub_button').click(function(){
-  var name = $('#countryName').val()
+  let name = $('#countryName').val()
     $.ajax({
       url: "/countries",
       type:"POST",
@@ -59,11 +62,11 @@ $('#sub_button').click(function(){
     
 $('#del_button').click(function(){
 
-  var name = $('#countryName').val()
+  let name = $('#countryName').val()
     $.ajax({
       url: "/countries",
       type:"DELETE",
-     
+      data:{name:name},
     }).done(function(response){
     console.log(response)
     }).fail(function(response){
