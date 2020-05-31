@@ -5,31 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> App1 </title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='appcss.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-color.v1.min.js"></script>
     <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url_for('index') }}">Site Name </a>
+    <nav class="navbar navbar-expand-lg navbar-light" >
+        <a class="navbar-brand" href="{{ url_for('index') }}">Stack A </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="{{ url_for('index') }}">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" id="sec-1"href="{{ url_for('index') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('inspiration') }}">Inspiration</a>
+              <a class="nav-link" id="sec-2" href="{{ url_for('inspiration') }}">Inspiration</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('countryPage') }}">Countries</a>
+              <a class="nav-link" id="sec-3" href="{{ url_for('countryPage') }}">Countries</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('getCountries') }}">Countries JSON</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="sec-4" href="{{ url_for('apiDoc') }}">API Documentation</a>
             </li>
           </ul>
           

@@ -1,3 +1,8 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import 'scss/style.scss'
+const title = 'My Minimal React Webpack Babel Setup';
+
 function Square(props) {
     return (
       <button className="square" onClick={props.onClick}>
@@ -87,8 +92,8 @@ function Square(props) {
   // ========================================
   
   ReactDOM.render(
-    <Game />,
-    document.getElementById('root')
+    <Game />, <div>{title}</div>,
+    document.getElementById('root'),document.getElementById('app')
   );
   
   function calculateWinner(squares) {

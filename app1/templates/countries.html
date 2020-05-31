@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block container %}
+
 <div class="row">
     <div class="col-6">
 <h1> countries</h1>
@@ -22,22 +23,10 @@
   <button id="sub_button">Submit</button>
   <button id="del_button">Delete</button>
  <div>
-  <h1>Delete Country </h1>
- <!-- <form action = "{{ url_for('getCountries') }}" method="POST">
-    <input type="hidden" name="_method" value="DELETE">
-  <div class="input text">
-  Name: <input type="text" name="name" required>
-  <br>
-  {{countries.label}}
-  </div>
 
-  <div class="input submit">
- <input type="submit" value="Delete" id="del_button">
- </div>
-</form> -->
 </div>
 </div>
-<svg></svg>
+
  
 
 {% endblock %}   

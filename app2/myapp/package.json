@@ -5,12 +5,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./bin/www",
+    "debug": "DEBUG=myapp:* npm start",
     "build": "webpack --progress --mode=production",
     "watch": "webpack --progress --watch",
     "server": "webpack-dev-server --open",
-    "scss": "node-sass --watch scss -o css"
+    "scss": "node-sass scss -o css",
+    "deploy": "./node_modules/.bin/webpack & npm start"
   },
   "dependencies": {
+    "@webpack-cli/init": "^0.2.2",
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
     "cookie-parser": "~1.4.4",
@@ -20,7 +23,8 @@
     "moment": "^2.25.3",
     "morgan": "~1.9.1",
     "node-sass": "^4.14.1",
-    "pug": "2.0.0-beta11"
+    "pug": "^2.0.0-beta11",
+    "sass-loader": "^8.0.2"
   },
   "description": "stack b",
   "main": "app.js",

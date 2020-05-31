@@ -1,35 +1,34 @@
 
 $(document).ready(function() {
+  var mydata = null;
    fetch('/countries')
    .then(response => response.json())
    .then(data => {
-  
-   year = 1800
-   
-   
+  mydata = data;
+   var year = 1800;
+var interval = null;
+   drawGraph(year);
+   interval = setInterval(function(){ 
+    year++;
+   drawGraph(year);
+   if(year == 2020)
+   {
+     clearInterval(interval);
+   }
+},100);
+   function drawGraph(year){
  //figure out max and min, call the funstion in translate / transform  x y 
-    var g = d3.select("svg").selectAll("g").data(data);
-                   
-    var enter = g.enter().append("g")
-    .attr("transform",function(d){ 
-      incyear = d3.keys(d.data.income_per_person_gdppercapita_ppp_inflation_adjusted)
-      var maxincyear = d3.max(d3.values(incyear).map(function(d){return +d}))
-      console.log("maxincyear",maxincyear)
-     year = d3.keys(d.data.child_mortality_0_5_year_olds_dying_per_1000_born)
-     var maxyear = d3.max(d3.values(year).map(function(d){return +d}))
-      // convert to number
-      
-     console.log("max child year",maxyear)
-     var minyear = d3.min(d3.values(year).map(function(d){return +d}))
-     console.log("max child year",minyear)
-  
-    //console.log(d.data.child_mortality_0_5_year_olds_dying_per_1000_born)
-   // console.log(d3.keys(d.data.child_mortality_0_5_year_olds_dying_per_1000_born))
-    //console.log(d3.values(d.data.child_mortality_0_5_year_olds_dying_per_1000_born))
-    if (d && d.data && d.data.child_mortality_0_5_year_olds_dying_per_1000_born && d.data.child_mortality_0_5_year_olds_dying_per_1000_born[minyear] )
-    return "translate("+ d.data.child_mortality_0_5_year_olds_dying_per_1000_born[minyear] + "," + d.data.child_mortality_0_5_year_olds_dying_per_1000_born[maxyear] +")" 
-    else if(d && d.data && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[minyear])
-    return "translate("+ d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[minyear] + "," + d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[maxincyear] +")" 
+   // var g = d3.select("svg").selectAll("g").data(data);
+   console.log(year)
+    var svg = d3.select("svg");
+    svg.selectAll("*").remove();
+    var g = svg.selectAll("g").data(mydata);
+    var enter = g.enter().append("g").attr("transform",function(d){ 
+     
+      if (d && d.data && d.data.child_mortality_0_5_year_olds_dying_per_1000_born && d.data.child_mortality_0_5_year_olds_dying_per_1000_born[year] && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year])
+      return "translate("+ d.data.child_mortality_0_5_year_olds_dying_per_1000_born[year] + "," +d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year] +")" 
+    // else if(d && d.data && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year])
+    // return "translate("+ d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year] + "," + d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year] +")" 
    //domain and range look into this , mapping function
    
   // for later d3 code plot circles funtion draw
@@ -39,9 +38,20 @@ $(document).ready(function() {
     .attr("r",19)
     .attr("fill", function(d,i){return d3.schemeCategory10[i % 10] });
     enter.append("text").text(function(d){ return d.name });
-   
-    });
+  } 
+    
+ 
+    $('#year').on("keyup",function(e){
+      console.log("keyup");
+      if(e.keyCode == 13)
+      {
+        console.log(13);
+       var year = parseInt($(e.target).val());
+       console.log(year);
+       drawGraph(year);
+      }
   
+    });
 
 $('#sub_button').click(function(){
   let name = $('#countryName').val()
@@ -78,4 +88,5 @@ $('#del_button').click(function(){
   }) ;
 
 
+});
 });

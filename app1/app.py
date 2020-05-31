@@ -81,7 +81,9 @@ def utility():
             country.save()
     return Country.objects.to_json()
     #json.dumps(names) #python one 
-
+@app.route('/apidoc')
+def apiDoc():
+      return render_template('apidoc.html')
 #api's (seperate file?)
 @app.route('/countries/<countries_id>', methods=['GET'])
 @app.route('/countries', methods=['GET','POST','DELETE'])

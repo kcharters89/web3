@@ -9,13 +9,17 @@ module.exports = {
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.(scss|css)$/,
           exclude: /node_modules/,
           use: {
-            loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env']
-            }
+            loader: 'babel_loader',
+            loader: 'style-loader',
+            loader: 'css-loader',
+            loader: 'sass-loader',
+          query:{
+            presets:['@babel/react']
+          },
+         
           }
         }
       ]
