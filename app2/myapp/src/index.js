@@ -1,7 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'scss/style.scss'
-const title = 'My Minimal React Webpack Babel Setup';
 
 function Square(props) {
     return (
