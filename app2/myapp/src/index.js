@@ -1,114 +1,104 @@
+import React from "react";
+import ReactDOM from "react-dom";
 
-function Square(props) {
-    return (
-      <button className="square" onClick={props.onClick}>
-        {props.value}
-      </button>
-    );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: this.state,
+      list: [{ name: 'select country' }], currentCountry: { name: 'please select a country', data: { 'data title': 'to be displayed' } }
+    };//build list
+
+
+    this.handleChange = this.handleChange.bind(this);
+
   }
-  
-  class Board extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        squares: Array(9).fill(null),
-        xIsNext: true,
-      };
-    }
-  
-    handleClick(i) {
-      const squares = this.state.squares.slice();
-      if (calculateWinner(squares) || squares[i]) {
-        return;
-      }
-      squares[i] = this.state.xIsNext ? 'X' : 'O';
-      this.setState({
-        squares: squares,
-        xIsNext: !this.state.xIsNext,
+  componentDidMount() {
+    // check local sotrage before fetch
+
+    if (localStorage.getItem('countries')) {
+      this.setState((state) => {
+
+        state.list.push(...JSON.parse(localStorage.getItem('countries')))
+        return state
       });
+
     }
-  
-    renderSquare(i) {
-      return (
-        <Square
-          value={this.state.squares[i]}
-          onClick={() => this.handleClick(i)}
-        />
-      );
+    else {
+      //do fetch
+      fetch('http://10.25.137.221:8080/countries') // on server i presume its 10.25.137.221:8080/countries 
+        .then(response => response.json())
+        .then(data => {
+          //console.log(data)
+          localStorage.setItem('countries', JSON.stringify(data))
+          this.setState((state) => {
+
+            state.list.push(...data)
+            return state
+          });
+
+
+
+        });
     }
+
+
+  }
+
+  //do fetch here for idividual countries label select and text , state has current country. update state 
+  handleChange = (event) => {
+    let name = event.target.value
+
+    fetch('http://10.25.137.221:8080/countries/' + name)
+      .then(response => response.json())
+      .then(data => {
+        this.setState((state) => {
+          state.currentCountry = data[0]
+
+          return state
+        })
+      });
+
+  }
+
+
+  render() {
+
+    const { list, currentCountry } = this.state
+    const keys = Object.keys(currentCountry.data)
   
-    render() {
-      const winner = calculateWinner(this.state.squares);
-      let status;
-      if (winner) {
-        status = 'Winner: ' + winner;
-      } else {
-        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-      }
-  
-      return (
-        <div>
-          <div className="status">{status}</div>
-          <div className="board-row">
-            {this.renderSquare(0)}
-            {this.renderSquare(1)}
-            {this.renderSquare(2)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(3)}
-            {this.renderSquare(4)}
-            {this.renderSquare(5)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(6)}
-            {this.renderSquare(7)}
-            {this.renderSquare(8)}
+    return (
+      <div>
+        <label>
+          Select A Country<br />
+          <select onChange={this.handleChange} >
+            {list.map((item) => (
+              <option value={item.name}>{item.name}</option>
+            ))}
+
+          </select>
+
+          <br />
+        </label>
+        <div >
+          {currentCountry.name}
+
+          <div>
+
+            {keys.map((key) => (
+              <p>{key} :{currentCountry.data[0]}
+
+              </p>
+            ))}
+
           </div>
         </div>
-      );
-    }
+
+      </div>
+    );
+
   }
-  
-  class Game extends React.Component {
-    render() {
-      return (
-        <div className="game">
-          <div className="game-board">
-            <Board />
-          </div>
-          <div className="game-info">
-            <div>{/* status */}</div>
-            <ol>{/* TODO */}</ol>
-          </div>
-        </div>
-      );
-    }
-  }
-  
-  // ========================================
-  
-  ReactDOM.render(
-    <Game />, <div>{title}</div>,
-    document.getElementById('root'),document.getElementById('app')
-  );
-  
-  function calculateWinner(squares) {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a];
-      }
-    }
-    return null;
-  }
-  
+}
+
+ReactDOM.render(<App />, document.querySelector("#container"));

@@ -1,4 +1,9 @@
 $test: red;
+$font-pack: Helvetica, sans-serif;
 body {
 background-color: $test;
+font: $font-pack;
+}
+p{
+    font: $font-pack;
 }

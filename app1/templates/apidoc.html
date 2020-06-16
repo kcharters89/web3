@@ -1,15 +1,47 @@
 {% extends "base.html" %}
 
 {% block container %}
-<div class="col-md-4 col-sm-6">
+<div class="col-md-6 col-sm-8">
 <h2> API Documentaion</h2>
 
-<h3>List countries</h3>
-<p>GET /countries - list all countries <br>
-<p>GET /countrypage </p>
+<p><b>List countries</b></p>
+<p>GET /countries - list all countries in alphabetical order <br>
+<p> GET /countries/&lt;optional:countries_id&gt;  get specific country </p>  
 
-
+<p><b>Optional parameters</b></p>
+   <p> name (string) country name used to specify a single country</p>
+    
+    <p><b>Countries Object </b><br>
+    GET /country<br>
+    <i>returns</i><br>
+    <br>
+    <p><b>_id</b> unique id generated from mongo data base </p><br>
+    <p><b>Example:</b> "_id": {"$oid": "5ee3f7ceaf8743d0a16d6adf"} </p><br>
+    <p><b>name</b> name of the country  </p> <br>
+    <p><b>Example:</b> "name": "Afghanistan" </p><br>
+    <p><b>data</b> data corresponding to the country, includes 3 csv's with year and data as key and value</p><br>
+    <p><b>Example:</b> "data": {"child_mortality_0_5_year_olds_dying_per_1000_born": {"1800": "469"} </p><br>
+    <p><b>Example:</b> "data": { "children_per_woman_total_fertility": {"1800": "7"} </p><br>
+    <p><b>Example:</b> "data": {"income_per_person_gdppercapita_ppp_inflation_adjusted": {"1800": "603"} </p><br>
+    GET /country/Italy<br>
+    <i>returns</i><br>
+    { <br>
+        _id: "123", <br>
+        name: "Italy", <br>
+        data: " {"children_per_woman_total_fertility": {"1800": "7"}"
+    }<br>
 </p>
+</p>
+</p>
+<p><b>Create New Country</b></p>
+<p>POST /countries - creates a new country name</p>
+<p>adding a string to the input creates a country with that name</p>
+<p> currently no implementation to add data with country name </p>
+<p>returns country to list if call succeded </p>
+
+<p><b>Delete a Country</b></p>
+<p>DELETE /countries</p>
+<p>adding a string to the input  will Delete a country with that name</p>
 
 </div>
 {% endblock %} 

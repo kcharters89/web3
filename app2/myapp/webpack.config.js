@@ -1,10 +1,11 @@
 // webpack.config.js
+const path = require('path');
 module.exports = {
     mode: 'development',
-    entry: './index.js',
+    entry: './src/index.js',
     output: {
       filename: 'main.js',
-      publicPath: 'dist'
+      path: path.resolve(__dirname, 'public/javascripts')
     },
     module: {
       rules: [
@@ -19,9 +20,21 @@ module.exports = {
           query:{
             presets:['@babel/react']
           },
+
          
           }
-        }
+        },
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          query:
+          {
+              presets:['@babel/preset-env',
+              '@babel/react',{
+              'plugins': ['@babel/plugin-proposal-class-properties']}]
+          }
+      }
       ]
     }
   };

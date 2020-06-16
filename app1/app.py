@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from mongoengine import *
-
+from flask_cors import CORS
 import json
 import os
 import csv
@@ -11,9 +11,10 @@ connect('web3')
 
 app = Flask(__name__)
 #before the routes , later on will go in a seperate file for structure
+cors = CORS(app, resources={r"/countries/*": {"origins": "*"}})
 app.config.from_object('config')
 
-#models?
+
 class Country(Document):
     name = StringField()
     data = DictField()
@@ -22,22 +23,10 @@ class Country(Document):
 @app.route('/index')
 @app.route('/home')
 def index():
-    #put in load data
-    #choose csv that doeesnt have missing data or figure how turn blanks into 0's
-    
-        #this below will turn blank into 0  need to incorperate into above code?
-        # for row in d:
-        #     for i, x in enumerate(row):
-        #         if len(x)< 1:
-        #                  x = row[i] = 0
-        #     print (','.join(str(x)for x in row))  
-            
-          
-        
-        
+   
     return render_template('index.html'), 200
    
-#add new countries in the routes so it doenst run every time the index is run 
+
 
 @app.route('/inspiration')
 def inspiration():
@@ -45,6 +34,7 @@ def inspiration():
 
 @app.route('/loadData')
 def utility():
+    #function to load csv data to the mongo database 
     for file in os.listdir(app.config['FILES_FOLDER']):
         filename = os.fsdecode(file)
         path = os.path.join(app.config['FILES_FOLDER'],filename)
@@ -85,27 +75,28 @@ def utility():
 def apiDoc():
       return render_template('apidoc.html')
 #api's (seperate file?)
+
 @app.route('/countries/<countries_id>', methods=['GET'])
 @app.route('/countries', methods=['GET','POST','DELETE'])
+
 def getCountries(countries_id=None):
     if request.method == 'GET':
-
-        name=request.form.get('name') 
-
+        
         if countries_id is None: # if no country given
-            countries = Country.objects #return all
+            name=request.form.get('name') 
+            #countries = Country.objects #return all
             if name: #if name enetered
-                 countries = Country.objects.get(name=name) #return objects with that name
+                 countries = Country.objects.get(name=countries_id) #return objects with that name, not working 
             else:
-                countries = Country.objects #othrwise return all
+                countries = Country.objects #otherwise return all
         else:
-            countries = Country.objects(name=countries_id).all()   #if non of the above return all     
+            countries = Country.objects(name=countries_id).all()   #if none of the above return all     
         
         
          
     elif request.method == 'POST':
         #updating data in database
-        #on postman can add empty data and thats it
+        
         name=request.form.get('name')
         if name:
             newName = Country(name=name).save()
@@ -113,15 +104,15 @@ def getCountries(countries_id=None):
         countries = Country.objects
         
        
-        #delete doesnt work anymore
+        
     elif request.method == 'DELETE':
          
         name = request.form.get('name') 
-        #gets one
-        delname = Country.objects.get(name=name)
-        delname.delete()
-        countries = Country.objects
         
+        delname = Country.objects.get(name=name)# gets country by name 
+        delname.delete() # deletes country 
+        countries = Country.objects
+        #currently doesnt work if there are multipel of the same name   
         
        
     return countries.to_json()

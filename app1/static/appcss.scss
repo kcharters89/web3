@@ -1,5 +1,21 @@
 $font-stack:    Helvetica, sans-serif;
-
-    body{
+$padding: 10px;
+$display : flex;
+     body{
+         font:$font-stack;
+     } 
+    .vert-list{
+        display:fixed;
+    }
+    .row{
+        margin-left: $padding;  
+    }
+    .container{
+        flex-direction: row; 
+        
+        padding-bottom: $padding;
+      }
+    p{
         font: $font-stack;
-        }   
+    }  
+    

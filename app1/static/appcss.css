@@ -1,79 +1,22 @@
-#css 
-
-.column{ width:100% }
-
-@media screen and (min-width: 600px) {
-  /* For tablets: */
-  .column { width: 50% } 
-  
+body {
+  font: Helvetica, sans-serif;
 }
 
-@media screen and (min-width: 1024px) {
-  /* For desktop: */
-  .column { width: 33.333% }  
-  .image1 { width: 33.333%} 
+.vert-list {
+  display: fixed;
 }
 
-.container-fluid{
-    display: flex;
-    
-}
-.vert-list{
-  display:left;
-} 
-.row{
+.row {
   margin-left: 10px;
 }
-/* #play-button {
-  position: absolute;
-  
-  background: #f08080;
-  padding-right: 26px;
-  border-radius: 3px;
-  border: none;
-  color: white;
-  margin: 0;
-  padding: 0 12px;
-  width: 60px;
-  cursor: pointer;
-  height: 30px;
+
+.container {
+  flex-direction: row;
+  padding-bottom: 10px;
 }
 
-#play-button:hover {
-  background-color: #696969;
-}    
-
-.ticks {
-  font-size: 10px;
+p {
+  font: Helvetica, sans-serif;
 }
 
-.track,
-.track-inset,
-.track-overlay {
-  stroke-linecap: round;
-}
-
-.track {
-  stroke: #000;
-  stroke-opacity: 0.3;
-  stroke-width: 10px;
-}
-
-.track-inset {
-  stroke: #dcdcdc;
-  stroke-width: 8px;
-}
-
-.track-overlay {
-  pointer-events: stroke;
-  stroke-width: 50px;
-  stroke: transparent;
-  cursor: crosshair;
-}
-
-.handle {
-  fill: #fff;
-  stroke: #000;
-  stroke-opacity: 0.5;
-  stroke-width: 1.25px;
-} */
+/*# sourceMappingURL=appcss.css.map */
