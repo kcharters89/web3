@@ -1,5 +1,5 @@
 $font-stack:    Helvetica, sans-serif;
-$padding: 10px;
+$padding: 5px;
 $display : flex;
      body{
          font:$font-stack;
@@ -9,13 +9,40 @@ $display : flex;
     }
     .row{
         margin-left: $padding;  
+        
     }
     .container{
         flex-direction: row; 
-        
+        margin:0 auto;
         padding-bottom: $padding;
       }
     p{
         font: $font-stack;
     }  
+    .myDropDown
+    {
+        height: 100px;
+        overflow: auto;
+    }
+    .worldMap{
+        float:right;
+    }
+    .title {
+        font-size: 40pt;
+    }
     
+    .axis {
+      fill: none;
+      stroke: black;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+    
+    .axis text {
+      fill: black;
+      stroke: none;
+    }
+    text{
+        
+        padding-left: 10px;
+    }

@@ -3,30 +3,44 @@
 {% block container %}
 
 <div class="row">
-    <div class="col-6">
-<h1> countries</h1>
-{% for item in countries %}
-<li>{{item.name}}</li>
-{% endfor %}
+    <div class="col-4">
+<h3> Countries</h3>
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Show All Countries
+    </button>
+    <div class="dropdown-menu myDropDown" aria-labelledby="dropdownMenuButton">
+        {% for item in countries %}
+        <li class="dropdown-item">{{item.name}}</li>
+        {% endfor %}
+    </div>
+    <br>
+  </div>
+  <br>
+  <hr>
+  </div>
+  
 </div>
 
 
+  <div class="row">
  <div class="col-4">
-<h1>Add /Delete Country </h1>
+<h3>Add /Delete Country </h3>
  
     <div class="input text">
     Name: <input type="text" name="name" id="countryName" required>
     <br>
     {{countries.label}}
-    </div>
+    </div><br>
 <!-- just have a button no form  -->
-  <button id="sub_button">Submit</button>
-  <button id="del_button">Delete</button>
- <div>
-
+  <button id="sub_button" type="button" class="btn btn-primary">Submit</button>
+  <button id="del_button" type="button" class="btn btn-danger">Delete</button>
+  <br>
+  <hr>
 </div>
+<img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1333&q=80" class="worldMap"/>
 </div>
 
- 
 
 {% endblock %}   

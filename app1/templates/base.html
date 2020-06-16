@@ -25,20 +25,23 @@
             <li class="nav-item">
               <a class="nav-link" id="sec-2" href="{{ url_for('inspiration') }}">Inspiration</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" id="sec-3" href="{{ url_for('countryPage') }}">Countries</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="sec-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Countries</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="nav-link"href="{{ url_for('countryPage') }}">Countries</a>
+                <hr>
+                <a class="nav-link" id="sec-4" href="{{ url_for('apiDoc') }}">API Documentation</a>
+                
+              </div>
+            
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('getCountries') }}">Countries JSON</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="sec-4" href="{{ url_for('apiDoc') }}">API Documentation</a>
-            </li>
+           
           </ul>
           
         </div>
       </nav> 
-     
+      
+      <hr>
   </head>
   <body>
     <div class="container">
@@ -53,6 +56,6 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> 
       <script type="text/javascript" src="/static/jquery.js"></script>
      <script type="text/javascript" src="/static/ajax.js"></script>
-      
+      <script type="text/javascript" src="/static/d3.js"></script>
   </body>
   </html>

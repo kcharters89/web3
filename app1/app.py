@@ -5,7 +5,7 @@ import json
 import os
 import csv
 import jinja2
-
+#connect to database 
 connect('web3')
 
 
@@ -14,11 +14,11 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/countries/*": {"origins": "*"}})
 app.config.from_object('config')
 
-
+#create model
 class Country(Document):
     name = StringField()
     data = DictField()
-    
+#routes for index    
 @app.route('/')
 @app.route('/index')
 @app.route('/home')
@@ -30,7 +30,7 @@ def index():
 
 @app.route('/inspiration')
 def inspiration():
-    return render_template('inspiration.html')
+    return render_template('inspiration.html'),200
 
 @app.route('/loadData')
 def utility():
@@ -73,11 +73,11 @@ def utility():
     #json.dumps(names) #python one 
 @app.route('/apidoc')
 def apiDoc():
-      return render_template('apidoc.html')
-#api's (seperate file?)
+      return render_template('apidoc.html'),200
 
-@app.route('/countries/<countries_id>', methods=['GET'])
-@app.route('/countries', methods=['GET','POST','DELETE'])
+#routes for country methods
+@app.route('/countries/<countries_id>', methods=['GET']) #single country
+@app.route('/countries', methods=['GET','POST','DELETE']) #CRUD on all coutries 
 
 def getCountries(countries_id=None):
     if request.method == 'GET':
@@ -98,9 +98,9 @@ def getCountries(countries_id=None):
         #updating data in database
         
         name=request.form.get('name')
-        if name:
+        if name: #if name given
             newName = Country(name=name).save()
-        
+        #save to database
         countries = Country.objects
         
        
@@ -112,7 +112,7 @@ def getCountries(countries_id=None):
         delname = Country.objects.get(name=name)# gets country by name 
         delname.delete() # deletes country 
         countries = Country.objects
-        #currently doesnt work if there are multipel of the same name   
+        #currently doesnt work if there are multiple of the same name   
         
        
     return countries.to_json()
@@ -120,7 +120,7 @@ def getCountries(countries_id=None):
 @app.route('/countrypage')
 def countryPage():
     countries = Country.objects
-    return render_template('countries.html',countries=countries)
+    return render_template('countries.html',countries=countries),200
 
 
 if __name__ == "__main__":
