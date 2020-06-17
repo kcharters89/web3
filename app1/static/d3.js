@@ -1,5 +1,6 @@
 
 $(document).ready(function () {
+
   var mydata = null;
 
   fetch('/countries')
@@ -34,7 +35,7 @@ $(document).ready(function () {
             "translate(" + margin.left + "," + margin.top + ")");
         
         //create X axis
-        var xScale = d3.scaleLinear().domain([0, 800]).range([0, w - margin.right]);
+        var xScale = d3.scaleLinear().domain([0, 180000]).range([0, w]);
         svg.append("g")
           .attr("class", "axis x")
           .attr("transform", "translate(0," + h + ")")
@@ -44,9 +45,9 @@ $(document).ready(function () {
           .attr("x", w / 2)
           .attr("y", h + margin.bottom)
           .style("text-anchor", "middle")
-          .text("Children per Women");
+          .text("Income per person");
         //create Y axis
-        var yScale = d3.scaleLinear().domain([0, 10]).range([0, h])
+        var yScale = d3.scaleLinear().domain([800, 0]).range([0, h])
         svg.append("g")
           .attr("class", "axis y")
           .call(d3.axisLeft(yScale))
@@ -60,18 +61,18 @@ $(document).ready(function () {
           .style("text-anchor", "middle")
           .text("Child Mortality");
         // scale for circle size 
-        var zScale = d3.scaleLinear()
-          .domain([350, 160000])
-          .range([10, 50]);
+        // var zScale = d3.scaleLinear()
+        //   .domain([350, 160000])
+        //   .range([10, 50]);
 
 
           //changing of the circles by data and relation to axis 
         var enter = g.enter().append("g").attr("transform", function (d) {
 
-          if (d && d.data && d.data.children_per_woman_total_fertility && d.data.children_per_woman_total_fertility[year] && d.data.child_mortality_0_5_year_olds_dying_per_1000_born && d.data.child_mortality_0_5_year_olds_dying_per_1000_born[year])
-            return "translate(" + xScale(d.data.child_mortality_0_5_year_olds_dying_per_1000_born[year]) + "," + yScale(d.data.children_per_woman_total_fertility[year]) + ")"
+          if (d && d.data && d.data.child_mortality_0_5_year_olds_dying_per_1000_born && d.data.child_mortality_0_5_year_olds_dying_per_1000_born[year] && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year])
+            return "translate(" + xScale(d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year]) + "," + yScale(d.data.child_mortality_0_5_year_olds_dying_per_1000_born[year]) + ")"
           else
-            return "translate(-1000,-1000)"
+          return"translate (- 1000, -1000)"
 
         });
         //create tool tip so country names arent always there 
@@ -84,16 +85,16 @@ $(document).ready(function () {
           .style("padding-left", "10px")
           .text(function (d) { return "Country:" + d.name  })
 
-        var secondtooltip =
-        enter
-        .append("text")
-          .style("visibility", "hidden")
-          .attr("x", 20)
-          .attr("y", 25)
-          .text(function (d) {
-            if (d && d.data && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted)
-            return "Income:" + d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year]
-            });
+        // var secondtooltip =
+        // enter
+        // .append("text")
+        //   .style("visibility", "hidden")
+        //   .attr("x", 20)
+        //   .attr("y", 25)
+        //   .text(function (d) {
+        //     if (d && d.data && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted)
+        //     return "Income:" + d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year]
+        //     });
          
           //append data to the circle 
         var circle = enter.append("circle")
@@ -105,18 +106,14 @@ $(document).ready(function () {
            if(p === d) d3.select(this).style("visibility","visible");
            else d3.select(this).style("visibility","hidden");
 
-           secondtooltip.filter(function(p){
-            if(p === d) d3.select(this).style("visibility","visible");
-            else d3.select(this).style("visibility","hidden");
-           })
+          //  secondtooltip.filter(function(p){
+          //   if(p === d) d3.select(this).style("visibility","visible");
+          //   else d3.select(this).style("visibility","hidden");
+           //})
         })
            }) 
            //change the radius y used the income data 
-          .attr("r", function (d) {
-            if (d && d.data && d.data.income_per_person_gdppercapita_ppp_inflation_adjusted)
-              return zScale(d.data.income_per_person_gdppercapita_ppp_inflation_adjusted[year])
-          })
-                 
+          .attr("r", 19)     
           .attr("stroke", "black")
           .attr("fill", function (d, i) { return d3.schemeCategory10[i % 10] });
 
