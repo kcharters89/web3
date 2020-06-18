@@ -1,6 +1,8 @@
-body {
-  background-color: red;
-  font: Helvetica, sans-serif; }
-
 p {
   font: Helvetica, sans-serif; }
+
+#container-fluid {
+  padding: 10px; }
+
+#container {
+  padding: 10px; }

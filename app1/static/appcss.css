@@ -29,24 +29,4 @@ p {
   float: right;
 }
 
-.title {
-  font-size: 40pt;
-}
-
-.axis {
-  fill: none;
-  stroke: black;
-  stroke-width: 1;
-  shape-rendering: crispEdges;
-}
-
-.axis text {
-  fill: black;
-  stroke: none;
-}
-
-text {
-  padding-left: 10px;
-}
-
 /*# sourceMappingURL=appcss.css.map */

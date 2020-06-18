@@ -1,6 +1,7 @@
 
 $(document).ready(function () {
-//button to add a country name to the database 
+
+
       $('#sub_button').click(function () {
         //set name value
         let name = $('#countryName').val()
@@ -38,5 +39,5 @@ $(document).ready(function () {
         });
       });
 
-
+   
     });

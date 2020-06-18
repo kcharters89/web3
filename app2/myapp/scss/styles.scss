@@ -1,9 +1,13 @@
-$test: red;
+
 $font-pack: Helvetica, sans-serif;
-body {
-background-color: $test;
-font: $font-pack;
-}
+
+
 p{
     font: $font-pack;
+}
+#container-fluid{
+    padding: 10px;
+}
+#container{
+    padding: 10px
 }
